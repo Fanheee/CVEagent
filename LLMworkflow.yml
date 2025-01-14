@@ -1,0 +1,258 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: LLMworkflow
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: parameter-extractor
+      id: 1736816663969-source-1736819584307-target
+      source: '1736816663969'
+      sourceHandle: source
+      target: '1736819584307'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: parameter-extractor
+        targetType: tool
+      id: 1736819584307-source-1736820519503-target
+      source: '1736819584307'
+      sourceHandle: source
+      target: '1736820519503'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: llm
+      id: 1736820519503-source-1736820783663-target
+      source: '1736820519503'
+      sourceHandle: source
+      target: '1736820783663'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 1736820783663-source-1736820842988-target
+      source: '1736820783663'
+      sourceHandle: source
+      target: '1736820842988'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: question
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: question
+      height: 90
+      id: '1736816663969'
+      position:
+        x: 37.775746855267414
+        y: 282
+      positionAbsolute:
+        x: 37.775746855267414
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        instruction: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o-mini
+          provider: openai
+        parameters:
+        - description: 提取出对应的CVE编号，即CVE_id
+          name: CVE_id
+          required: true
+          type: string
+        query:
+        - '1736816663969'
+        - question
+        reasoning_mode: prompt
+        selected: false
+        title: 参数提取器
+        type: parameter-extractor
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1736819584307'
+      position:
+        x: 341.7757468552674
+        y: 282
+      positionAbsolute:
+        x: 341.7757468552674
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: google
+        provider_name: google
+        provider_type: builtin
+        selected: false
+        title: 谷歌搜索
+        tool_configurations: {}
+        tool_label: 谷歌搜索
+        tool_name: google_search
+        tool_parameters:
+          query:
+            type: mixed
+            value: CVE-{{#1736819584307.CVE_id#}}的相关信息
+        type: tool
+      height: 54
+      id: '1736820519503'
+      position:
+        x: 645.7757468552675
+        y: 282
+      positionAbsolute:
+        x: 645.7757468552675
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1736820519503'
+          - json
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o-mini
+          provider: openai
+        prompt_template:
+        - id: b49aae17-8e50-4bb4-871e-6d5d1281a457
+          role: system
+          text: 从谷歌搜索中{{#context#}}总结提取CVE相关的信息，例如漏洞原因，是否存在POC等。
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 123
+      id: '1736820783663'
+      position:
+        x: 947.1367310337218
+        y: 282
+      positionAbsolute:
+        x: 947.1367310337218
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1736820783663'
+          - text
+          variable: text
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1736820842988'
+      position:
+        x: 1253.7757468552675
+        y: 282
+      positionAbsolute:
+        x: 1253.7757468552675
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 17.413923492498043
+      y: 61.778759528493794
+      zoom: 0.6597539553864473
