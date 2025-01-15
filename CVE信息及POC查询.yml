@@ -1,0 +1,692 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: CVE信息及POC查询
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables:
+  - description: ''
+    id: 6fa90018-2ba7-4df4-9b27-991de9d2f48a
+    name: NVD_API_KEY
+    selector:
+    - env
+    - NVD_API_KEY
+    value: '''fe797238-4a9f-4745-a60d-f33ed2fe1bb3'''
+    value_type: string
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: variable-aggregator
+      id: 1736829857170-source-1736830909614-target
+      source: '1736829857170'
+      sourceHandle: source
+      target: '1736830909614'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: variable-aggregator
+        targetType: parameter-extractor
+      id: 1736830909614-source-1736829952370-target
+      source: '1736830909614'
+      sourceHandle: source
+      target: '1736829952370'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: parameter-extractor
+        targetType: end
+      id: 1736829952370-source-1736701062619-target
+      source: '1736829952370'
+      sourceHandle: source
+      target: '1736701062619'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: tool
+      id: 1736687153842-source-1736929355047-target
+      source: '1736687153842'
+      sourceHandle: source
+      target: '1736929355047'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: code
+      id: 1736929355047-source-1736929479098-target
+      source: '1736929355047'
+      sourceHandle: source
+      target: '1736929479098'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        iteration_id: '1736931132480'
+        sourceType: iteration-start
+        targetType: tool
+      id: 1736931132480start-source-1736931174037-target
+      source: 1736931132480start
+      sourceHandle: source
+      target: '1736931174037'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: iteration
+      id: 1736929479098-source-1736931132480-target
+      source: '1736929479098'
+      sourceHandle: source
+      target: '1736931132480'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        iteration_id: '1736931132480'
+        sourceType: tool
+        targetType: llm
+      id: 1736931174037-source-1736931258481-target
+      source: '1736931174037'
+      sourceHandle: source
+      target: '1736931258481'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1736931132480'
+        sourceType: llm
+        targetType: template-transform
+      id: 1736931258481-source-1736931440449-target
+      source: '1736931258481'
+      sourceHandle: source
+      target: '1736931440449'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        sourceType: iteration
+        targetType: code
+      id: 1736931132480-source-1736931504841-target
+      source: '1736931132480'
+      sourceHandle: source
+      target: '1736931504841'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: template-transform
+      id: 1736931504841-source-1736931586560-target
+      source: '1736931504841'
+      sourceHandle: source
+      target: '1736931586560'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: end
+      id: 1736931586560-source-1736931613339-target
+      source: '1736931586560'
+      sourceHandle: source
+      target: '1736931613339'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: tool
+      id: 1736687153842-source-1736829857170-target
+      source: '1736687153842'
+      sourceHandle: source
+      target: '1736829857170'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: cveid
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: cveid
+      height: 88
+      id: '1736687153842'
+      position:
+        x: -57.4754435293836
+        y: 262.32217795650956
+      positionAbsolute:
+        x: -57.4754435293836
+        y: 262.32217795650956
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1736829952370'
+          - Description
+          variable: Descripition
+        - value_selector:
+          - '1736829952370'
+          - CWE
+          variable: CWE
+        - value_selector:
+          - '1736829952370'
+          - kasc
+          variable: KnownAffectedConfigurationsSoftware
+        selected: false
+        title: 结束
+        type: end
+      height: 140
+      id: '1736701062619'
+      position:
+        x: 1342.0166320769988
+        y: 73.39498904956793
+      positionAbsolute:
+        x: 1342.0166320769988
+        y: 73.39498904956793
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: NVD官网搜索相关CVE信息
+        provider_id: webscraper
+        provider_name: webscraper
+        provider_type: builtin
+        selected: false
+        title: 网页爬虫
+        tool_configurations:
+          generate_summary: null
+          user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+            (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36
+        tool_label: 网页爬虫
+        tool_name: webscraper
+        tool_parameters:
+          url:
+            type: mixed
+            value: https://nvd.nist.gov/vuln/detail/{{#1736687153842.cveid#}}
+        type: tool
+      height: 142
+      id: '1736829857170'
+      position:
+        x: 291.2133352954221
+        y: 73.39498904956793
+      positionAbsolute:
+        x: 291.2133352954221
+        y: 73.39498904956793
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        instruction: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o-mini
+          provider: openai
+        parameters:
+        - description: 对于CVE的描述
+          name: Description
+          required: false
+          type: string
+        - description: cve的弱点描述
+          name: CWE
+          required: false
+          type: string
+        - description: 已知受影响的软件配置
+          name: kasc
+          required: false
+          type: string
+        query:
+        - '1736829857170'
+        - text
+        reasoning_mode: prompt
+        selected: false
+        title: 参数提取器 2
+        type: parameter-extractor
+        variables: []
+        vision:
+          enabled: false
+      height: 96
+      id: '1736829952370'
+      position:
+        x: 973.6126527424284
+        y: 73.39498904956793
+      positionAbsolute:
+        x: 973.6126527424284
+        y: 73.39498904956793
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        output_type: string
+        selected: false
+        title: 变量聚合器
+        type: variable-aggregator
+        variables:
+        - - '1736829857170'
+          - text
+      height: 107
+      id: '1736830909614'
+      position:
+        x: 616.6193901713314
+        y: 73.39498904956793
+      positionAbsolute:
+        x: 616.6193901713314
+        y: 73.39498904956793
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: 搜索引擎搜索cveid+poc
+        provider_id: tavily
+        provider_name: tavily
+        provider_type: builtin
+        selected: false
+        title: Tavily Search
+        tool_configurations:
+          days: 3
+          exclude_domains: null
+          include_answer: 0
+          include_domains: null
+          include_image_descriptions: 0
+          include_images: 0
+          include_raw_content: 0
+          max_results: 5
+          search_depth: basic
+          topic: general
+        tool_label: Tavily Search
+        tool_name: tavily_search
+        tool_parameters:
+          query:
+            type: mixed
+            value: '{{#1736687153842.cveid#}} poc'
+        type: tool
+      height: 350
+      id: '1736929355047'
+      position:
+        x: 291.2133352954221
+        y: 262.32217795650956
+      positionAbsolute:
+        x: 291.2133352954221
+        y: 262.32217795650956
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        code: "import re\nimport time\ndef main(arg1) -> dict:\n    urls = re.findall(r'http[s]?://[^\\\
+          s)]+', arg1)\n    return {\n        \"result\": urls,\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: array[string]
+        selected: false
+        title: 提取网址
+        type: code
+        variables:
+        - value_selector:
+          - '1736929355047'
+          - text
+          variable: arg1
+      height: 52
+      id: '1736929479098'
+      position:
+        x: 611.6609729361676
+        y: 262.32217795650956
+      positionAbsolute:
+        x: 611.6609729361676
+        y: 262.32217795650956
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        error_handle_mode: terminated
+        height: 516
+        is_parallel: true
+        iterator_selector:
+        - '1736929479098'
+        - result
+        output_selector:
+        - '1736931440449'
+        - output
+        output_type: array[string]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1736931132480start
+        title: 迭代
+        type: iteration
+        width: 993
+      height: 516
+      id: '1736931132480'
+      position:
+        x: 973.6126527424284
+        y: 262.32217795650956
+      positionAbsolute:
+        x: 973.6126527424284
+        y: 262.32217795650956
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 993
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1736931132480start
+      parentId: '1736931132480'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 997.6126527424284
+        y: 330.32217795650956
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        desc: 对每个网址进行迭代
+        isInIteration: true
+        iteration_id: '1736931132480'
+        provider_id: jina
+        provider_name: jina
+        provider_type: builtin
+        selected: false
+        title: 获取单页面信息
+        tool_configurations:
+          gather_all_images_at_the_end: 0
+          gather_all_links_at_the_end: 0
+          image_caption: 0
+          max_retries: 2
+          no_cache: 0
+          proxy_server: null
+          remove_selector: null
+          retain_images: 0
+          summary: 0
+          target_selector: null
+          wait_for_selector: null
+          with_iframe: 0
+          with_shadow_dom: 0
+        tool_label: 获取单页面
+        tool_name: jina_reader
+        tool_parameters:
+          url:
+            type: mixed
+            value: '{{#1736931132480.item#}}'
+        type: tool
+      height: 428
+      id: '1736931174037'
+      parentId: '1736931132480'
+      position:
+        x: 128
+        y: 68
+      positionAbsolute:
+        x: 1101.6126527424285
+        y: 330.32217795650956
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+      zIndex: 1002
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        default_value:
+        - key: text
+          type: string
+          value: 异常
+        desc: LLM分析POC信息
+        error_strategy: default-value
+        isInIteration: true
+        iteration_id: '1736931132480'
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o-mini
+          provider: openai
+        prompt_template:
+        - id: c69b0bbf-7e46-4305-b61e-4684ff9c2c2b
+          role: system
+          text: 判断该页面是否存在{{#1736687153842.cveid#}}的POC信息，并对其进行总结，网页内容为{{#1736931174037.text#}}。对于没有POC信息的网页，则请直接忽略，并说明其无POC信息。注意使用汉语进行回答。
+        selected: false
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 160
+      id: '1736931258481'
+      parentId: '1736931132480'
+      position:
+        x: 431
+        y: 68
+      positionAbsolute:
+        x: 1404.6126527424285
+        y: 330.32217795650956
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+      zIndex: 1002
+    - data:
+        desc: 拼接网址与POC信息
+        isInIteration: true
+        iteration_id: '1736931132480'
+        selected: false
+        template: '{{ arg1 }}\SP{{ text }}'
+        title: 模板转换
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1736931132480'
+          - item
+          variable: arg1
+        - value_selector:
+          - '1736931258481'
+          - text
+          variable: text
+      height: 80
+      id: '1736931440449'
+      parentId: '1736931132480'
+      position:
+        x: 734
+        y: 68
+      positionAbsolute:
+        x: 1707.6126527424285
+        y: 330.32217795650956
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+      zIndex: 1002
+    - data:
+        code: "\nimport time\ndef main(arg1) -> dict:\n    result = []\n    for item\
+          \ in arg1:\n        url, text = item.split('\\\\SP')\n        text = text.replace('\\\
+          n', ' ')\n        result.append({'url':url, 'text':text})\n    return {\n\
+          \        \"result\": result,\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: array[object]
+        selected: false
+        title: 结果提取
+        type: code
+        variables:
+        - value_selector:
+          - '1736931132480'
+          - output
+          variable: arg1
+      height: 52
+      id: '1736931504841'
+      position:
+        x: 2056.8650603009546
+        y: 262.32217795650956
+      positionAbsolute:
+        x: 2056.8650603009546
+        y: 262.32217795650956
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        selected: false
+        template: "|URL|Summary|\r\n|---|---|\r\n{% for data in arg1 -%}\r\n|{{data.url}}|{{data.text}}|\r\
+          \n{% endfor -%}"
+        title: 模板转换 2
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1736931504841'
+          - result
+          variable: arg1
+      height: 52
+      id: '1736931586560'
+      position:
+        x: 2369.5616923804914
+        y: 262.32217795650956
+      positionAbsolute:
+        x: 2369.5616923804914
+        y: 262.32217795650956
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1736931586560'
+          - output
+          variable: output
+        selected: false
+        title: 结束 2
+        type: end
+      height: 88
+      id: '1736931613339'
+      position:
+        x: 2693.8942829554726
+        y: 262.32217795650956
+      positionAbsolute:
+        x: 2693.8942829554726
+        y: 262.32217795650956
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    viewport:
+      x: -325.3512071264994
+      y: 225.19201849407554
+      zoom: 0.4629373636996594
